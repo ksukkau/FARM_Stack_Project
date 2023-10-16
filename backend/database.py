@@ -3,8 +3,8 @@ from model import PokemonModel
 import motor.motor_asyncio
 
 client = motor.motor_asyncio.AsyncIOMotorClient("mongodb://localhost:27017")
-database = client.PokemonList
-collection = database.pokemon
+database = client.test
+collection = database.pokemons
 
 
 async def fetch_one_pokemon(id: int):
@@ -15,7 +15,7 @@ async def fetch_one_pokemon(id: int):
 async def fetch_all_pokemon():
     """Fetch all pokemon from the database"""
     cursor = collection.find({})
-    documents = await cursor.to_list()
+    documents = await cursor.to_list(809)
     return documents
 
 async def create_pokemon(pokemon: PokemonModel):

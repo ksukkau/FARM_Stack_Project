@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 import enum
 
 
-class PType(str, Enum):
+class PType(str, enum.Enum):
     """Pokemon type"""
     normal = "normal"
     fire = "fire"
@@ -36,7 +36,7 @@ class PokemonModel(BaseModel):
     """Main Pokemon model"""
     id: int
     name: str
-    type: list[PType] = Field(None, alias="type")
+    type: list
     base: Base = Field(
       alias="base",
       title="Base stats",
