@@ -1,45 +1,29 @@
 from pydantic import BaseModel, Field
-import enum
 
 
-class PType(str, enum.Enum):
-    """Pokemon type"""
-    normal = "normal"
-    fire = "fire"
-    water = "water"
-    electric = "electric"
-    grass = "grass"
-    ice = "ice"
-    fighting = "fighting"
-    poison = "poison"
-    ground = "ground"
-    flying = "flying"
-    psychic = "psychic"
-    bug = "bug"
-    rock = "rock"
-    ghost = "ghost"
-    dragon = "dragon"
-    dark = "dark"
-    steel = "steel"
-    fairy = "fairy"
-
-class Base(BaseModel):
-    """Base stats"""
+class BaseStats(BaseModel):
     HP: int
     Attack: int
     Defense: int
     Speed: int
-    SpecialAttack: int
-    SpecialDefense: int
+    SpecialAttack: int = Field(..., alias="Special Attack")
+    SpecialDefense: int = Field(..., alias="Special Defense")
+
+class NameTranslations(BaseModel):
+    english: str
+    japanese: str
+    chinese: str
+    french: str
 
 class PokemonModel(BaseModel):
-    """Main Pokemon model"""
+    _id: dict
     id: int
-    name: str
-    type: list
-    base: Base = Field(
-      alias="base",
-      title="Base stats",
-      description="Base stats for the Pokemon",
-    )
+    name: NameTranslations
+    type: list[str]
+    base: BaseStats
+    __v: int
 
+    class Config:
+        fields = {
+            '_id': "$oid"
+        }
