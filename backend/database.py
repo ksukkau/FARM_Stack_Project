@@ -3,17 +3,17 @@ from model import PokemonModel
 import motor.motor_asyncio
 
 #testing database
-"""client = motor.motor_asyncio.AsyncIOMotorClient("mongodb://localhost:27017")
+client = motor.motor_asyncio.AsyncIOMotorClient("mongodb://localhost:27017")
 database = client.test
-collection = database.pokemons"""
+collection = database.pokemons
 
-#live database
+"""#live database
 mongo_uri = "mongodb+srv://kat:urIQ2tDuTmDBRY6I@cluster0.sp6xasb.mongodb.net/Pokemon?retryWrites=true&w=majority"
 
 client = motor.motor_asyncio.AsyncIOMotorClient(mongo_uri)
 database = client.get_database("Pokemon")
 collection = database.get_collection("pokemons")
-
+"""
 
 async def fetch_one_pokemon(id: int):
     """Fetch one pokemon from the database"""
@@ -38,7 +38,9 @@ async def create_pokemon(pokemon: PokemonModel):
     # Serialize the Python object into a dictionary
     document = pokemon.dict()
     result = await collection.insert_one(document)
-    return result
+    inserted_id = result.inserted_id
+    created_pmon = await collection.find_one({"_id": inserted_id})
+    return created_pmon
 
 
 async def update_pokemon(id: int, pokemon: PokemonModel):
@@ -46,6 +48,7 @@ async def update_pokemon(id: int, pokemon: PokemonModel):
     # Serialize the Python object into a dictionary
     document = pokemon.dict()
     result = await collection.update_one({"id": id}, {"$set": document})
+
     return result
 
 async def delete_pokemon(id: int):
