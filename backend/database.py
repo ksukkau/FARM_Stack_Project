@@ -8,16 +8,17 @@ database = client.test
 collection = database.pokemons
 
 """#live database
-mongo_uri = "mongodb+srv://kat:urIQ2tDuTmDBRY6I@cluster0.sp6xasb.mongodb.net/Pokemon?retryWrites=true&w=majority"
+mongo_uri = "mongodb+srv://kat:urIQ2tDuTmDBRY6I@cluster0.sp6xasb.mongodb.net/
+Pokemon?retryWrites=true&w=majority"
 
 client = motor.motor_asyncio.AsyncIOMotorClient(mongo_uri)
 database = client.get_database("Pokemon")
 collection = database.get_collection("pokemons")
 """
 
-async def fetch_one_pokemon(id: int):
+async def fetch_one_pokemon(p_id: int):
     """Fetch one pokemon from the database"""
-    document = await collection.find_one({"id": id})
+    document = await collection.find_one({"id": p_id})
     if document:
         # Deserialize the MongoDB document into a Python object using the Pydantic model
         pokemon = PokemonModel(**document)
@@ -36,22 +37,35 @@ async def fetch_all_pokemon():
 async def create_pokemon(pokemon: PokemonModel):
     """Create a new pokemon in the database"""
     # Serialize the Python object into a dictionary
+
     document = pokemon.dict()
+    spatk = document['base']['SpecialAttack']
+    spdef = document['base']['SpecialDefense']
+    del document['base']['SpecialAttack']
+    del document['base']['SpecialDefense']
+    document['base']['Special Attack'] = spatk
+    document['base']['Special Defense'] = spdef
     result = await collection.insert_one(document)
     inserted_id = result.inserted_id
     created_pmon = await collection.find_one({"_id": inserted_id})
     return created_pmon
 
 
-async def update_pokemon(id: int, pokemon: PokemonModel):
+async def update_pokemon(p_id: int, pokemon: PokemonModel):
     """Update a pokemon in the database"""
     # Serialize the Python object into a dictionary
     document = pokemon.dict()
-    result = await collection.update_one({"id": id}, {"$set": document})
+    spatk = document['base']['SpecialAttack']
+    spdef = document['base']['SpecialDefense']
+    del document['base']['SpecialAttack']
+    del document['base']['SpecialDefense']
+    document['base']['Special Attack'] = spatk
+    document['base']['Special Defense'] = spdef
+    result = await collection.update_one({"id": p_id}, {"$set": document})
 
     return result
 
-async def delete_pokemon(id: int):
+async def delete_pokemon(p_id: int):
     """Delete a pokemon in the database"""
-    result = await collection.delete_one({"id": id})
+    result = await collection.delete_one({"id": p_id})
     return result

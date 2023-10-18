@@ -5,10 +5,9 @@ class BaseStats(BaseModel):
     Attack: int
     Defense: int
     Speed: int
-    SpecialAttack: int = Field(..., serialization_alias="Special Attack")
-    SpecialDefense: int = Field(..., serialization_alias="Special Defense")
-    SpecialAttack: int = Field(..., validation_alias="Special Attack")
-    SpecialDefense: int = Field(..., validation_alias="Special Defense")
+    SpecialAttack: int = Field(..., alias="Special Attack")
+    SpecialDefense: int = Field(..., alias="Special Defense")
+
 
 class NameTranslations(BaseModel):
     english: str
