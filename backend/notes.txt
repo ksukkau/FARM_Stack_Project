@@ -1,0 +1,15 @@
+start shell: pipenv shell
+start app: uvicorn main:app --reload
+local host/docs to sent test requests
+
+start mongo db using wsl
+sudo service mongodb start
+
+"""#live database
+mongo_uri = "mongodb+srv://kat:urIQ2tDuTmDBRY6I@cluster0.sp6xasb.mongodb.net/
+Pokemon?retryWrites=true&w=majority"
+
+client = motor.motor_asyncio.AsyncIOMotorClient(mongo_uri)
+database = client.get_database("Pokemon")
+collection = database.get_collection("pokemons")
+"""

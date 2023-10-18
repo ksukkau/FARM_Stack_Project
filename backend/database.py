@@ -17,6 +17,13 @@ client = motor.motor_asyncio.AsyncIOMotorClient("mongodb://localhost:27017")
 database = client.test
 collection = database.pokemons
 
+"""#live database
+mongo_uri = <>
+
+client = motor.motor_asyncio.AsyncIOMotorClient(mongo_uri)
+database = client.get_database("Pokemon")
+collection = database.get_collection("pokemons")
+"""
 
 async def fetch_one_pokemon(p_id: int):
     """Fetch one Pokémon from the database"""
