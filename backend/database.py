@@ -1,3 +1,13 @@
+"""
+This module provides functions for performing database operations with Pokémon
+    data using Pydantic models.
+
+It includes functions for fetching, creating, updating, and deleting Pokémon
+    records in a MongoDB database.
+
+Author: Kat Sukkau
+Date: Oct 2023
+"""
 from model import PokemonModel
 #mongoDB driver
 import motor.motor_asyncio
@@ -7,17 +17,9 @@ client = motor.motor_asyncio.AsyncIOMotorClient("mongodb://localhost:27017")
 database = client.test
 collection = database.pokemons
 
-"""#live database
-mongo_uri = "mongodb+srv://kat:urIQ2tDuTmDBRY6I@cluster0.sp6xasb.mongodb.net/
-Pokemon?retryWrites=true&w=majority"
-
-client = motor.motor_asyncio.AsyncIOMotorClient(mongo_uri)
-database = client.get_database("Pokemon")
-collection = database.get_collection("pokemons")
-"""
 
 async def fetch_one_pokemon(p_id: int):
-    """Fetch one pokemon from the database"""
+    """Fetch one Pokémon from the database"""
     document = await collection.find_one({"id": p_id})
     if document:
         # Deserialize the MongoDB document into a Python object using the Pydantic model
@@ -27,7 +29,7 @@ async def fetch_one_pokemon(p_id: int):
 
 
 async def fetch_all_pokemon():
-    """Fetch all pokemon from the database"""
+    """Fetch all Pokémon from the database"""
     cursor = collection.find({})
     documents = await cursor.to_list(809)
     # Deserialize the list of documents into a list of Python objects
@@ -35,7 +37,7 @@ async def fetch_all_pokemon():
     return pokemons
 
 async def create_pokemon(pokemon: PokemonModel):
-    """Create a new pokemon in the database"""
+    """Create a new Pokémon in the database"""
     # Serialize the Python object into a dictionary
 
     document = pokemon.dict()
@@ -52,7 +54,7 @@ async def create_pokemon(pokemon: PokemonModel):
 
 
 async def update_pokemon(p_id: int, pokemon: PokemonModel):
-    """Update a pokemon in the database"""
+    """Update a Pokémon in the database"""
     # Serialize the Python object into a dictionary
     document = pokemon.dict()
     spatk = document['base']['SpecialAttack']
@@ -66,6 +68,6 @@ async def update_pokemon(p_id: int, pokemon: PokemonModel):
     return result
 
 async def delete_pokemon(p_id: int):
-    """Delete a pokemon in the database"""
+    """Delete a Pokémon in the database"""
     result = await collection.delete_one({"id": p_id})
     return result

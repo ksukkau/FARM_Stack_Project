@@ -1,5 +1,23 @@
-import json
+"""
+Pokémon API Module
 
+This module defines a FastAPI-based API for interacting with a database of Pokémon.
+It includes endpoints for retrieving Pokémon, creating new Pokémon, updating existing Pokémon,
+and deleting Pokémon records.
+
+Endpoints:
+- GET /api/v1/pokemon/{id}: Retrieve a Pokémon by its ID.
+- GET /api/v1/allpokemon: Retrieve all Pokémon records.
+- POST /api/v1/pokemon/: Create a new Pokémon record.
+- PUT /api/v1/pokemon/{id}: Update an existing Pokémon record.
+- DELETE /api/v1/pokemon/{id}: Delete a Pokémon record.
+
+The module also incorporates CORS (Cross-Origin Resource Sharing) to allow requests from
+a specific origin (http://localhost:3000 in this case).
+
+Author: Kat Sukkau
+Date: Oct 2023
+"""
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from database import fetch_one_pokemon, fetch_all_pokemon, create_pokemon, update_pokemon
@@ -12,7 +30,7 @@ origins = [
 ]
 
 app.add_middleware(
-  CORSMiddleware, 
+  CORSMiddleware,
   allow_origins=origins,
   allow_credentials=True,
   allow_methods=["*"],
@@ -26,11 +44,11 @@ def read_root():
 @app.get("/api/v1/pokemon/{id}")
 async def get_pokemon_by_id(p_id:int):
   if not p_id:
-    raise HTTPException(status_code=400, detail=f"Please enter an integer")
+    raise HTTPException(status_code=400, detail="Please enter an integer")
   response = await fetch_one_pokemon(p_id)
   if response:
     return response
-  raise HTTPException(status_code=404, detail=f"Pokemon with ID {p_id} not found")
+  raise HTTPException(status_code=404, detail=f"Pokémon with ID {p_id} not found")
 
 @app.get("/api/v1/allpokemon")
 async def get_all_pokemon():
@@ -40,8 +58,6 @@ async def get_all_pokemon():
   raise HTTPException(status_code=400, detail="Oops something went wrong / Bad Request")
 
 
-from fastapi import HTTPException
-
 
 @app.post("/api/v1/pokemon/", response_model=PokemonModel)
 async def post_pokemon(pokemon: PokemonModel):
@@ -50,8 +66,7 @@ async def post_pokemon(pokemon: PokemonModel):
     print(type(result))
     if result:
       return result
-    else:
-      raise HTTPException(status_code=500, detail="Failed to create the Pokémon")
+    raise HTTPException(status_code=500, detail="Failed to create the Pokémon")
   except Exception as e:
     raise HTTPException(status_code=400, detail=str(e))
 
