@@ -1,0 +1,74 @@
+
+.cards {
+  padding: 1rem;
+  max-width: 1500px;
+  margin: 0 auto;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.card {
+  border-radius: 25px;
+  border:1pt;
+  border-style: outset;
+  color: black;
+  padding: .5rem;
+  height: 15rem;
+  justify-content: center;
+}
+
+.cardtext{
+  text-align: center;
+  justify-content: center;
+  max-height:20%;
+  margin:.5rem;
+}
+
+.imgdiv{
+  text-align:center;
+  justify-content: center;
+  max-height:90%;
+}
+
+#pokeimg{
+  height:13rem;
+  object-fit: fill;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#statList{
+  list-style:none;
+}
+
+#details{
+  border-radius: 25px;
+  border:1pt;
+  border-style: outset;
+  color: black;
+  padding: .5rem;
+  height: 20rem;
+  justify-content: center;
+  text-align:left;
+  max-width: 700px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+#details p{
+padding-left: 2.5rem;
+}
+
+#details h4{
+  padding-left: 2.5rem;
+  }
+
+#detailpokeimg{
+  height:20rem;
+  object-fit: fill;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

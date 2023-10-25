@@ -1,0 +1,18 @@
+.button{
+  border:none;
+  outline: none;
+  background:none;
+  font-size: 20px;
+  color: grey;
+}
+
+.button-holder{
+  display: flex;
+  margin:1rem;
+  justify-content: center;
+  max-width: 100%;
+}
+
+#current{
+  color: blue;
+}
