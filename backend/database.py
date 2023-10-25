@@ -8,6 +8,7 @@ It includes functions for fetching, creating, updating, and deleting Pokémon
 Author: Kat Sukkau
 Date: Oct 2023
 """
+from decouple import config
 from model import PokemonModel
 #mongoDB driver
 import motor.motor_asyncio
@@ -17,13 +18,13 @@ client = motor.motor_asyncio.AsyncIOMotorClient("mongodb://localhost:27017")
 database = client.test
 collection = database.pokemons
 
-"""#live database
-mongo_uri = <>
-
+#live database
+mongo_uri = config('DB_URL')
+"""
 client = motor.motor_asyncio.AsyncIOMotorClient(mongo_uri)
 database = client.get_database("Pokemon")
-collection = database.get_collection("pokemons")
-"""
+collection = database.get_collection("pokemons")"""
+
 
 async def fetch_one_pokemon(p_id: int):
     """Fetch one Pokémon from the database"""

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "56eb05101175b990df35579dd195824d3234c64a43fbe5a598d31af3f906b2f3"
+            "sha256": "4689b9ebd478996f20698e76acc08fa33c60fb350c7816ba9c8d464516f000e9"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -31,6 +31,14 @@
             ],
             "markers": "platform_system == 'Windows'",
             "version": "==0.4.6"
+        },
+        "config": {
+            "hashes": [
+                "sha256:2dd4a03aa383d30711d5a3325a1858de225328d61950a85be5b74c100f63016d",
+                "sha256:79ffa009ff2663cc8ca29e56bcec031c044609d4bafaa4f884132a413101ce84"
+            ],
+            "index": "pypi",
+            "version": "==0.5.1"
         },
         "fastapi": {
             "hashes": [
@@ -213,6 +221,14 @@
             ],
             "index": "pypi",
             "version": "==3.13.0"
+        },
+        "python-decouple": {
+            "hashes": [
+                "sha256:ba6e2657d4f376ecc46f77a3a615e058d93ba5e465c01bbe57289bfb7cce680f",
+                "sha256:d0d45340815b25f4de59c974b855bb38d03151d81b037d9e3f463b0c9f8cbd66"
+            ],
+            "index": "pypi",
+            "version": "==3.8"
         },
         "starlette": {
             "hashes": [
