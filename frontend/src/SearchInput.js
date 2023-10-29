@@ -1,6 +1,13 @@
 import {useState} from 'react'
 import React from 'react'
 import './SearchInput.css';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import FloatingLabel from 'react-bootstrap/esm/FloatingLabel';
+import Container from 'react-bootstrap/Container';
+
 
 export default function SearchInput(
   { searchInputs, setSearchInputs }) 
@@ -70,7 +77,7 @@ export default function SearchInput(
     selectedTypes = []
   };
 
-  return (
+ /* return (
     <div class="formContainer">
 
         <div id="searchcontainer">
@@ -90,9 +97,10 @@ export default function SearchInput(
           pokemonTypes.map((name, index) => {
             return (
               <li key={index}>
-                <div className="typeitem">
+                <Form className="typeitem">
                   <div className="left-section">
-                    <input
+                    <Form.Check
+                      inline
                       type="checkbox"
                       id={`custom-checkbox-${index}`}
                       name={name}
@@ -102,7 +110,7 @@ export default function SearchInput(
                     />
                     <label htmlFor={`custom-checkbox-${index}`}>{name}</label>
                   </div>
-                </div>
+                </Form>
               </li>
             );
           })
@@ -137,6 +145,59 @@ export default function SearchInput(
         </div>
 
     </div>
-  )
+  )*/
 
+ return (
+
+    <Form>
+
+      <Container fluid='md'>
+      <Row>
+        <Form.Label className="mt-3" column="lg" >Pokemon Search</Form.Label>
+      </Row>
+      <Row>
+        <Col lg={5} >
+        <FloatingLabel controlID="floatingName" label="Pokemon Name" className="m-auto">
+        <Form.Control type="text" placeholder="Search..." onChange={textOnChangeFunctionHandle}/>
+        </FloatingLabel>
+        </Col>
+      </Row>
+      <Row className="justify-content-md-start">
+        <Form.Label className="mt-3" column="lg" >Select Type</Form.Label>
+      </Row>
+      <Row>
+        <Col className="m-2 justify-content-start align-items-start">
+        {
+          pokemonTypes.map((name, index) => {
+            return (
+                    <Form.Check
+                      inline
+                      type="checkbox"
+                      id={`custom-checkbox-${index}`}
+                      name={name}
+                      value={name}
+                      key={name}
+                      onChange={() => handleOnChange(index)}
+                      label={name}
+                    />
+            );
+          })
+          }
+        </Col>
+      </Row>
+      <Row className="d-flex justify-content-center align-items-center">
+        <Col lg={5}>
+          <Form.Label className="m-3">Hp:</Form.Label>
+          <Form.Range min="0" max="255" step="1" onChange={handleHpSlider} value={hpState}/>
+          <p id='valueHp'>{hpState}</p>
+        </Col>
+        <Col lg={5}>
+          <Form.Label className="m-3">Attack:</Form.Label>
+          <Form.Range min="0" max="255" step="1" onChange={handleAkSlider} value={akState}/>
+          <p id="valueAttack">{akState}</p>
+        </Col>
+      </Row>
+      </Container>
+    </Form>
+  )
 }
