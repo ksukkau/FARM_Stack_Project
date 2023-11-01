@@ -58,13 +58,7 @@ async def create_pokemon(pokemon: PokemonModel):
 async def update_pokemon(p_id: int, pokemon: PokemonModel):
     """Update a Pokémon in the database"""
     # Serialize the Python object into a dictionary
-    document = pokemon.dict()
-    spatk = document['base']['SpecialAttack']
-    spdef = document['base']['SpecialDefense']
-    del document['base']['SpecialAttack']
-    del document['base']['SpecialDefense']
-    document['base']['Special Attack'] = spatk
-    document['base']['Special Defense'] = spdef
+    document = pokemon.dump()
     result = await collection.update_one({"id": p_id}, {"$set": document})
 
     return result
