@@ -150,11 +150,8 @@ export default function SearchInput(
  return (
 
     <Form>
-
+      <Form.Label className="mt-3" column="lg" >Pokemon Search</Form.Label>
       <Container fluid='md'>
-      <Row>
-        <Form.Label className="mt-3" column="lg" >Pokemon Search</Form.Label>
-      </Row>
       <Row>
         <Col lg={5} >
         <FloatingLabel controlID="floatingName" label="Pokemon Name" className="m-auto">
