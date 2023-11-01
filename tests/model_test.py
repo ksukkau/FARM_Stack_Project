@@ -10,8 +10,6 @@ project_root = os.path.abspath(os.path.join(current_dir, os.pardir, os.pardir))
 
 # Add the project root to the Python path
 sys.path.append(project_root)
-
-# Now, you should be able to import the module from the backend directory
 from backend.model import BaseStats, NameTranslations, PokemonModel
 
 class TestModel:
