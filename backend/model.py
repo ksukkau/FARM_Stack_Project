@@ -15,7 +15,8 @@ Author: Kat Sukkau
 Date: Oct 2023
 """
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
+
 
 class BaseStats(BaseModel):
     """
@@ -28,6 +29,15 @@ class BaseStats(BaseModel):
     SpecialAttack: int = Field(..., alias="Special Attack")
     SpecialDefense: int = Field(..., alias="Special Defense")
 
+    def dump(self):
+        return {
+            "HP": self.HP,
+            "Attack": self.Attack,
+            "Defense": self.Defense,
+            "Speed": self.speed,
+            "Special Attack": self.SpecialAttack,
+            "Special Defense": self.SpecialDefense
+            }
 
 class NameTranslations(BaseModel):
     """
@@ -37,6 +47,14 @@ class NameTranslations(BaseModel):
     japanese: str
     chinese: str
     french: str
+
+    def dump(self):
+        return {
+            "english": self.english,
+            "japanese": self.japanese,
+            "chinese": self.chinese,
+            "french": self.french,
+            }
 
 class PokemonModel(BaseModel):
     """
@@ -49,10 +67,20 @@ class PokemonModel(BaseModel):
     base: BaseStats
     __v: int
 
-    class Config:
+    class Config(ConfigDict):
         """
         Creates unique id
         """
         fields = {
             '_id': "$oid"
+        }
+
+    def dump(self):
+        return {
+            "_id": self._id,
+            "id": self.id,
+            "name": self.name.dump(),
+            "type": self.type,
+            "base": self.base.dump(),
+            "__v": self.__v
         }

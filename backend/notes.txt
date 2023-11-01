@@ -34,3 +34,8 @@ We suggest that you begin by typing:
 
   cd frontend
   npm start
+
+
+Run Pytest
+example
+pytest tests/model_test.py -v
