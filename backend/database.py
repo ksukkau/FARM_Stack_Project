@@ -28,7 +28,7 @@ collection = database.get_collection("pokemons")"""
 
 async def fetch_one_pokemon(p_id: int):
     """Fetch one Pokémon from the database"""
-    document = await collection.find_one({"id": p_id})
+    document = await collection.find_one({"id": {"$eq": p_id}})
     if document:
         # Deserialize the MongoDB document into a Python object using the Pydantic model
         pokemon = PokemonModel(**document)
@@ -65,7 +65,7 @@ async def update_pokemon(p_id: int, pokemon: PokemonModel):
 
 async def delete_pokemon_from_db(p_id: int):
     """Delete a Pokémon in the database"""
-    result = await collection.delete_one({"id": p_id})
+    result = await collection.delete_one({"id": {"$eq": p_id}})
     if result.deleted_count == 1:
         return {"message": f"Deletion of Pokemon {p_id} successful"}
     else:
