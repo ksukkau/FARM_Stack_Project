@@ -48,13 +48,7 @@ async def create_pokemon(pokemon: PokemonModel):
     """Create a new Pokémon in the database"""
     # Serialize the Python object into a dictionary
 
-    document = pokemon.dict()
-    spatk = document['base']['SpecialAttack']
-    spdef = document['base']['SpecialDefense']
-    del document['base']['SpecialAttack']
-    del document['base']['SpecialDefense']
-    document['base']['Special Attack'] = spatk
-    document['base']['Special Defense'] = spdef
+    document = pokemon.dump()
     result = await collection.insert_one(document)
     inserted_id = result.inserted_id
     created_pmon = await collection.find_one({"_id": inserted_id})
@@ -75,7 +69,10 @@ async def update_pokemon(p_id: int, pokemon: PokemonModel):
 
     return result
 
-async def delete_pokemon(p_id: int):
+async def delete_pokemon_from_db(p_id: int):
     """Delete a Pokémon in the database"""
     result = await collection.delete_one({"id": p_id})
-    return result
+    if result.deleted_count == 1:
+        return {"message": f"Deletion of Pokemon {p_id} successful"}
+    else:
+        return {"message": "No document found for deletion"}

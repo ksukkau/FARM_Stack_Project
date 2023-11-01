@@ -34,7 +34,7 @@ class BaseStats(BaseModel):
             "HP": self.HP,
             "Attack": self.Attack,
             "Defense": self.Defense,
-            "Speed": self.speed,
+            "Speed": self.Speed,
             "Special Attack": self.SpecialAttack,
             "Special Defense": self.SpecialDefense
             }
@@ -77,10 +77,9 @@ class PokemonModel(BaseModel):
 
     def dump(self):
         return {
-            "_id": self._id,
             "id": self.id,
             "name": self.name.dump(),
             "type": self.type,
             "base": self.base.dump(),
-            "__v": self.__v
+            "__v": 0
         }

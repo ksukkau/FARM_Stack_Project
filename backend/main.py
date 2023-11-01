@@ -20,7 +20,7 @@ Date: Oct 2023
 """
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from database import fetch_one_pokemon, fetch_all_pokemon, create_pokemon, update_pokemon
+from database import fetch_one_pokemon, fetch_all_pokemon, create_pokemon, update_pokemon, delete_pokemon_from_db
 from model import PokemonModel
 
 app = FastAPI()
@@ -95,7 +95,7 @@ async def delete_pokemon(p_id: int):
     raise HTTPException(status_code=400, detail="Please enter an integer ID")
 
   try:
-    response = await delete_pokemon(p_id)
+    response = await delete_pokemon_from_db(p_id)
     if response:
       return response
     raise HTTPException(status_code=404, detail=f"Pokemon with ID {p_id} not found")
