@@ -46,10 +46,7 @@ async def fetch_all_pokemon():
 
 async def create_pokemon(pokemon: PokemonModel):
     """Create a new Pokémon in the database"""
-    # Serialize the Python object into a dictionary
-
-    document = pokemon.dump()
-    result = await collection.insert_one(document)
+    result = await collection.insert_one(pokemon.dump())
     inserted_id = result.inserted_id
     created_pmon = await collection.find_one({"_id": inserted_id})
     return created_pmon
@@ -57,9 +54,7 @@ async def create_pokemon(pokemon: PokemonModel):
 
 async def update_pokemon(p_id: int, pokemon: PokemonModel):
     """Update a Pokémon in the database"""
-    # Serialize the Python object into a dictionary
-    document = pokemon.dump()
-    result = await collection.update_one({"id": p_id}, {"$set": document})
+    result = await collection.update_one({"id": {"$eq": p_id}}, {"$set": pokemon.dump()})
 
     return result
 
