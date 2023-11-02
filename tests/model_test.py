@@ -10,7 +10,7 @@ project_root = os.path.abspath(os.path.join(current_dir, os.pardir, os.pardir))
 
 # Add the project root to the Python path
 sys.path.append(project_root)
-from backend.model import BaseStats, NameTranslations, PokemonModel
+from backend.model import NameTranslations, PokemonModel
 
 class TestModel:
 
@@ -23,14 +23,14 @@ class TestModel:
             "name": {"english": "Pikachu", "japanese": "ピカチュウ", "chinese": "皮卡丘", "french": "Pikachu"},
             "type": ["Electric"],
             "base": {"HP": 35, "Attack": 55, "Defense": 40, "Speed": 90, "Special Attack": 50, "Special Defense": 50},
-            "__v": 1
+            "__v": 0
         }
 
         invalid_pokemon_data = {
             "id": 25,
             "type": ["Electric"],
             "base": {"HP": 35, "Attack": 55, "Defense": 40, "Speed": 90, "Special Attack": 50, "Special Defense": 50},
-            "__v": 1
+            "__v": 0
         }
 
         assert PokemonModel(**valid_pokemon_data)
