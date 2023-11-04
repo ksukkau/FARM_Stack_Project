@@ -9,7 +9,7 @@ Author: Kat Sukkau
 Date: Oct 2023
 """
 from decouple import config
-from model import PokemonModel
+from backend.model import PokemonModel
 #mongoDB driver
 import motor.motor_asyncio
 

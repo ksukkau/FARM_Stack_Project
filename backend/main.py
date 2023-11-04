@@ -10,6 +10,7 @@ Endpoints:
 - GET /api/v1/allpokemon: Retrieve all Pokémon records.
 - POST /api/v1/pokemon/: Create a new Pokémon record.
 - PUT /api/v1/pokemon/{id}: Update an existing Pokémon record.
+- POST /api/v1/pokemon/{id}: Upsert a Pokémon record.
 - DELETE /api/v1/pokemon/{id}: Delete a Pokémon record.
 
 The module also incorporates CORS (Cross-Origin Resource Sharing) to allow requests from
@@ -20,8 +21,8 @@ Date: Oct 2023
 """
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from database import fetch_one_pokemon, fetch_all_pokemon, create_pokemon, update_pokemon, delete_pokemon_from_db, upsert_pokemon_db
-from model import PokemonModel
+from backend.database import fetch_one_pokemon, fetch_all_pokemon, create_pokemon, update_pokemon, delete_pokemon_from_db, upsert_pokemon_db
+from backend.model import PokemonModel
 
 
 app = FastAPI()
