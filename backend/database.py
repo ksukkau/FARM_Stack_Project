@@ -13,6 +13,7 @@ from model import PokemonModel
 #mongoDB driver
 import motor.motor_asyncio
 
+
 #testing database
 client = motor.motor_asyncio.AsyncIOMotorClient("mongodb://localhost:27017")
 database = client.test
@@ -56,6 +57,11 @@ async def update_pokemon(p_id: int, pokemon: PokemonModel):
     """Update a Pokémon in the database"""
     result = await collection.update_one({"id": {"$eq": p_id}}, {"$set": pokemon.dump()})
 
+    return result
+
+async def upsert_pokemon_db(p_id: int, pokemon: PokemonModel):
+    """Update if exists insert if not"""
+    result = await collection.update_one(filter={"id": {"$eq": p_id}}, update={"$set": pokemon.dump()},upsert=True)
     return result
 
 async def delete_pokemon_from_db(p_id: int):

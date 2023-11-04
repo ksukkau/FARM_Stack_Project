@@ -20,8 +20,9 @@ Date: Oct 2023
 """
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from database import fetch_one_pokemon, fetch_all_pokemon, create_pokemon, update_pokemon, delete_pokemon_from_db
+from database import fetch_one_pokemon, fetch_all_pokemon, create_pokemon, update_pokemon, delete_pokemon_from_db, upsert_pokemon_db
 from model import PokemonModel
+
 
 app = FastAPI()
 
@@ -89,34 +90,19 @@ async def put_pokemon(p_id: int, pokemon: PokemonModel):
 
 @app.post("/api/v1/pokemon/{id}", response_model=PokemonModel)
 async def upsert_pokemon(p_id: int, pokemon: PokemonModel):
+  if not p_id:
+    raise HTTPException(status_code=400, detail="Please enter an integer ID")
   try:
-    exists = await fetch_one_pokemon(p_id)
+    result = await upsert_pokemon_db(p_id, pokemon)
+    if result.acknowledged:
+      updated_pokemon = await fetch_one_pokemon(p_id)
+      if updated_pokemon:
+        return updated_pokemon
+    raise HTTPException(status_code=404, detail=f"Pokemon with ID {p_id} not found")
+
   except Exception as e:
-    raise HTTPException(status_code=400, detail=f"error while searching pokemon {e}")
+    raise HTTPException(status_code=400, detail=str(e))
 
-  if exists:
-    try:
-      # Attempt to update the Pokemon in the database
-      result = await update_pokemon(p_id, pokemon)
-
-      # Check if the update was acknowledged and return the updated Pokemon
-      if result.acknowledged:
-        updated_pokemon = await fetch_one_pokemon(p_id)
-        if updated_pokemon:
-          return updated_pokemon
-      raise HTTPException(status_code=404, detail=f"Pokemon with ID {p_id} not found")
-    except Exception as e:
-      raise HTTPException(status_code=400, detail=str(e))
-
-  else:
-    try:
-      result = await create_pokemon(pokemon)
-      print(type(result))
-      if result:
-        return result
-      raise HTTPException(status_code=500, detail="Failed to create the Pokémon")
-    except Exception as e:
-      raise HTTPException(status_code=400, detail=str(e))
 
 
 @app.delete("/api/v1/pokemon/{id}")
