@@ -1,5 +1,6 @@
 import React from 'react';
 import Nav from 'react-bootstrap/Nav';
+import { SharedStateProvider } from './SharedStateContext';
 import SearchApp from './SearchApp'; 
 import EditApp from './EditApp';
 
@@ -11,6 +12,7 @@ export default function TabsExample () {
   };
 
   return (
+    <SharedStateProvider>
     <div>
       <Nav variant="tabs" activeKey={activeTab} onSelect={handleTabSelect}>
         <Nav.Item>
@@ -23,6 +25,7 @@ export default function TabsExample () {
       {activeTab === 'search' && <SearchApp />} 
       {activeTab === 'Edit' && <EditApp />}
     </div>
+    </SharedStateProvider>
   );
 };
 

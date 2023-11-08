@@ -1,10 +1,12 @@
 import './SearchApp.css';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Pagination from './Pagination';
 import Pokemon from './Pokemon'
 import SearchInput from './SearchInput'
+import { SharedStateContext } from './SharedStateContext';
+import Card from 'react-bootstrap/Card';
 
 
 const filterPokemon = (pokemons, searchInputs) => {
@@ -43,11 +45,10 @@ export default function App() {
     hp: 255,
     attack: 255
   })
-  const [pokemons, setPokemons] = useState([])
   const [currentPage, setCurrentPage] = useState(1);
   const [pokemonsPerPage] = useState(10);
 
-
+  const {pokemons, setPokemons} = useContext(SharedStateContext);
 
   let firstload = true;
   useEffect(() => {
@@ -93,6 +94,13 @@ export default function App() {
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />
+      <Card style={{ height: '3rem', backgroundColor: 'grey'}}>
+        <Card.Body>
+          <Card.Text>
+          Copyright 2023, All rights reserved &copy;
+          </Card.Text>
+        </Card.Body>
+      </Card>
     </div>
   );
 }
