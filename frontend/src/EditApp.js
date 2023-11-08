@@ -8,7 +8,52 @@ import { SharedStateContext } from './SharedStateContext';
 export default function EditApp() {
 
   const { pokemons } = useContext(SharedStateContext);
-  console.log(pokemons);
+  const [pokemon, setPokemon] = useState([]);
+  const [pokemonId, setPokemonId] = useState(0);
+  const [pokemonName, setPokemonName] = useState('');
+  const [pokemonType, setPokemonType] = useState('');
+  const [pokemonHP, setPokemonHP] = useState(0);
+  const [pokemonAttack, setPokemonAttack] = useState(0);
+  const [pokemonDefense, setPokemonDefense] = useState(0);
+  const [pokemonSpeed, setPokemonSpeed] = useState(0);
+  const [pokemonSpecialAttack, setPokemonSpecialAttack] = useState(0);
+  const [pokemonSpecialDefense, setPokemonSpecialDefense] = useState(0);
+
+  const updatePokemonHandler = () => {
+    createPokemon()
+    axios.post(`http://127.0.0.1:8000/api/v1/pokemon/{id}?p_id=${pokemonId}`, pokemon)
+    .then(res => console.log(res))
+  }
+
+  const deletePokemonHandler = () => {
+      axios.delete(`http://127.0.0.1:8000/api/v1/pokemon/{id}?p_id=${pokemonId}`)
+      .then(res => console.log(res))
+  }
+
+  const createPokemon = () => {
+      let data = {
+        "id": pokemonId,
+        "name": {
+          "english": pokemonName,
+          "japanese": "string",
+          "chinese": "string",
+          "french": "string"
+        },
+        "type": [
+          pokemonType
+        ],
+        "base": {
+          "HP": pokemonHP,
+          "Attack": pokemonAttack,
+          "Defense": pokemonDefense,
+          "Speed": pokemonSpeed,
+          "Special Attack": pokemonSpecialAttack,
+          "Special Defense": pokemonSpecialDefense
+        }
+      }
+      setPokemon(data)
+    }
+
   return (
     <div className="App">
       <div className='container d-flex justify-content-center align-items-center' style={{padding:'1rem'}}>
@@ -19,7 +64,7 @@ export default function EditApp() {
           <ListGroup variant="flush">
             <ListGroup.Item>
             <Card.Title>
-              <h4 className='text-primary text-center'>Edit Pokemon</h4>
+              <h4 className='text-primary text-center'>Add or Edit Pokemon</h4>
             </Card.Title>
             <Card.Body>
               <div className='form-container'>
@@ -33,6 +78,7 @@ export default function EditApp() {
                         className="mb-2"
                         id="inlineFormInput"
                         placeholder="Pokemon ID"
+                        onChange={event => setPokemonId(event.target.value)}
                       />
                     </Col>
                     <Col xs="auto">
@@ -43,6 +89,7 @@ export default function EditApp() {
                         className="mb-2"
                         id="inlineFormInput"
                         placeholder="Pokemon Name"
+                        onChange={event => setPokemonName(event.target.value)}
                       />
                     </Col>
                     <Col xs="auto">
@@ -53,6 +100,7 @@ export default function EditApp() {
                         className="mb-2"
                         id="inlineFormInput"
                         placeholder="Pokemon Type"
+                        onChange={event => setPokemonType(event.target.value)}  
                       />
                     </Col>
                   </Row>
@@ -65,6 +113,7 @@ export default function EditApp() {
                         className="mb-2"
                         id="inlineFormInput"
                         placeholder="HP"
+                        onChange={event => setPokemonHP(event.target.value)}
                       />
                     </Col>
                     <Col xs="auto">
@@ -75,6 +124,7 @@ export default function EditApp() {
                         className="mb-2"
                         id="inlineFormInput"
                         placeholder="Attack"
+                        onChange={event => setPokemonAttack(event.target.value)}
                       />
                     </Col>
                     <Col xs="auto">
@@ -85,6 +135,7 @@ export default function EditApp() {
                         className="mb-2"
                         id="inlineFormInput"
                         placeholder="Defense"
+                        onChange={event => setPokemonDefense(event.target.value)}
                       />
                     </Col>
                   </Row>
@@ -97,6 +148,7 @@ export default function EditApp() {
                         className="mb-2"
                         id="inlineFormInput"
                         placeholder="Speed"
+                        onChange={event => setPokemonSpeed(event.target.value)}
                       />
                     </Col>
                     <Col xs="auto">
@@ -107,6 +159,7 @@ export default function EditApp() {
                         className="mb-2"
                         id="inlineFormInput"
                         placeholder="Special Attack"
+                        onChange={event => setPokemonSpecialAttack(event.target.value)}
                       />
                     </Col>
                     <Col xs="auto">
@@ -117,12 +170,13 @@ export default function EditApp() {
                         className="mb-2"
                         id="inlineFormInput"
                         placeholder="Special Defense"
+                        onChange={event => setPokemonSpecialDefense(event.target.value)}
                       />
                     </Col>
                   </Row>
                   <Row className="align-items-center"> 
                     <Col xs="auto">
-                      <Button type="submitUpdate" className="mb-2">
+                      <Button type="submitUpdate" className="mb-2" onClick={updatePokemonHandler}>
                         Submit
                       </Button>
                     </Col>
@@ -147,11 +201,12 @@ export default function EditApp() {
                         className="mb-2"
                         id="inlineFormInput"
                         placeholder="Pokemon ID"
+                        onChange={event => setPokemonId(event.target.value)}
                       />
                     </Col>
                     <Col xs="auto">
-                      <Button type="submitDelete" className="mb-2">
-                        Submit
+                      <Button type="submitDelete" className="mb-2" onClick={deletePokemonHandler}>
+                        Delete
                       </Button>
                       </Col>
                   </Row>
