@@ -3,6 +3,7 @@ import axios from 'axios';
 import './EditApp.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Card from 'react-bootstrap/Card';
+import { Table } from 'react-bootstrap';
 import { SharedStateContext } from './SharedStateContext';
 
 export default function EditApp() {
@@ -15,31 +16,32 @@ export default function EditApp() {
         <div className='row'>
           <div className='col-md-12'>
             <h1 className='text-primary text-center'>Pokemon List</h1>
-            <table className='table table-bordered'>
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Type</th>
-                  <th>Stats</th>
-                </tr>
-              </thead>
-              <tbody>
-                {pokemons.length > 0 && pokemons.map((pokemon, index) => (
-                  
-                  <tr key={index}>
-                    <td>{pokemon.name.english}</td>
-                    <td>{pokemon.type}</td>
-                    <td>
-                      <ul id="statList">
-                        {(JSON.stringify(pokemon.base).replace('{', '').replace('}', '').split(',')).map((stat, index) => (
-                      <li key={index}>{stat.replaceAll('"', '')}</li>
-                      ))}
-                      </ul> 
-                      </td>
+            <div className='table-responsive'>
+              <Table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Stats</th>
                   </tr>
-                ))}
-              </tbody> 
-            </table>
+                </thead>
+                <tbody>
+                  {pokemons.length > 0 && pokemons.map((pokemon, index) => (
+                    <tr key={index}>
+                      <td>{pokemon.name.english}</td>
+                      <td>{pokemon.type}</td>
+                      <td>
+                        <ul id="statList">
+                          {(JSON.stringify(pokemon.base).replace('{', '').replace('}', '').split(',')).map((stat, index) => (
+                        <li key={index}>{stat.replaceAll('"', '')}</li>
+                        ))}
+                        </ul> 
+                        </td>
+                    </tr>
+                  ))}
+                </tbody> 
+              </Table>
+            </div>
           </div>
         </div>
       </div>
@@ -53,3 +55,4 @@ export default function EditApp() {
     </div>
   );
 }
+
