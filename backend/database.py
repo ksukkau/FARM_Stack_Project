@@ -40,7 +40,13 @@ async def fetch_one_pokemon(p_id: int):
 async def fetch_all_pokemon():
     """Fetch all Pokémon from the database"""
     cursor = collection.find({})
-    documents = await cursor.to_list(809)
+    documents = []
+    while True:
+        document = await cursor.to_list(100)
+        if document:
+            documents.extend(document)
+        else:
+            break
     # Deserialize the list of documents into a list of Python objects
     pokemons = [PokemonModel(**document) for document in documents]
     return pokemons
