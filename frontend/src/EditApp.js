@@ -7,7 +7,7 @@ import { SharedStateContext } from './SharedStateContext';
 
 export default function EditApp() {
 
-  const { pokemons } = useContext(SharedStateContext);
+  const { pokemons, setPokemons } = useContext(SharedStateContext);
   const [pokemon, setPokemon] = useState([]);
   const [pokemonId, setPokemonId] = useState(0);
   const [pokemonName, setPokemonName] = useState('');
@@ -19,16 +19,26 @@ export default function EditApp() {
   const [pokemonSpecialAttack, setPokemonSpecialAttack] = useState(0);
   const [pokemonSpecialDefense, setPokemonSpecialDefense] = useState(0);
 
-  const updatePokemonHandler = () => {
-    createPokemon()
-    axios.post(`http://127.0.0.1:8000/api/v1/pokemon/{id}?p_id=${pokemonId}`, pokemon)
-    .then(res => console.log(res))
-  }
+  const updatePokemonHandler = async () => {
+    createPokemon();
+    try {
+      await axios.post(`http://127.0.0.1:8000/api/v1/pokemon/{id}?p_id=${pokemonId}`, pokemon);
+      const updatedPokemons = await axios.get('http://127.0.0.1:8000/api/v1/allpokemon').then(res => res.data);
+      setPokemons(updatedPokemons);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  const deletePokemonHandler = () => {
-      axios.delete(`http://127.0.0.1:8000/api/v1/pokemon/{id}?p_id=${pokemonId}`)
-      .then(res => console.log(res))
-  }
+  const deletePokemonHandler = async () => {
+    try {
+      await axios.delete(`http://127.0.0.1:8000/api/v1/pokemon/{id}?p_id=${pokemonId}`);
+      const updatedPokemons = await axios.get('http://127.0.0.1:8000/api/v1/allpokemon').then(res => res.data);
+      setPokemons(updatedPokemons);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const createPokemon = () => {
       let data = {
@@ -176,7 +186,7 @@ export default function EditApp() {
                   </Row>
                   <Row className="align-items-center"> 
                     <Col xs="auto">
-                      <Button type="submitUpdate" className="mb-2" onClick={updatePokemonHandler}>
+                      <Button type="button" className="mb-2" onClick={updatePokemonHandler}>
                         Submit
                       </Button>
                     </Col>
@@ -205,7 +215,7 @@ export default function EditApp() {
                       />
                     </Col>
                     <Col xs="auto">
-                      <Button type="submitDelete" className="mb-2" onClick={deletePokemonHandler}>
+                      <Button type="button" className="mb-2" onClick={deletePokemonHandler}>
                         Delete
                       </Button>
                       </Col>
