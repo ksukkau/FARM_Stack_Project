@@ -1,31 +1,48 @@
-import React from 'react';
-import Nav from 'react-bootstrap/Nav';
-import { SharedStateProvider } from './SharedStateContext';
+import React, {useEffect} from 'react';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 import SearchApp from './SearchApp'; 
 import EditApp from './EditApp';
+import axios from 'axios';
+import { SharedStateProvider } from './SharedStateContext';
 
-export default function TabsExample () {
-  const [activeTab, setActiveTab] = React.useState('search'); 
+export default function NavTabs () {
 
-  const handleTabSelect = (selectedKey) => {
-    setActiveTab(selectedKey);
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Make a POST request to the backend endpoint
+        const response = await axios.post('http://127.0.0.1:8000/api/v1/pokemon/reload');
+
+        // Handle the response as needed
+        console.log(response.data.message);
+
+      } catch (error) {
+        console.error('Error updating database:', error);
+      }
+    };
+
+    fetchData(); // Call the async function
+
+    // This effect runs only once after the initial render
+  }, []);
 
   return (
-    <SharedStateProvider>
     <div>
-      <Nav variant="tabs" activeKey={activeTab} onSelect={handleTabSelect}>
-        <Nav.Item>
-          <Nav.Link eventKey="search">Search</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link eventKey="Edit">Edit</Nav.Link>
-        </Nav.Item>
-      </Nav>
-      {activeTab === 'search' && <SearchApp />} 
-      {activeTab === 'Edit' && <EditApp />}
-    </div>
-    </SharedStateProvider>
+      <SharedStateProvider>
+      <Tabs
+      defaultActiveKey="search"
+      id="uncontrolled-tab-example"
+      className="mb-3"
+    >
+      <Tab eventKey="search" title="Search">
+        <SearchApp/>
+      </Tab>
+      <Tab eventKey="edit" title="Edit">
+        <EditApp/>
+      </Tab>
+    </Tabs>
+      </SharedStateProvider>
+      </div>
   );
 };
-
