@@ -16,23 +16,21 @@ import motor.motor_asyncio
 POKE_URL = "https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/pokedex.json"
 
 #testing database
-client = motor.motor_asyncio.AsyncIOMotorClient("mongodb://localhost:27017")
-database = client.test
-collection = database.pokemons
+# client = motor.motor_asyncio.AsyncIOMotorClient("mongodb://localhost:27017")
+# database = client.test
+# collection = database.pokemons
 
 #live database
 mongo_uri = config('DB_URL')
-"""
 client = motor.motor_asyncio.AsyncIOMotorClient(mongo_uri)
 database = client.get_database("Pokemon")
-collection = database.get_collection("pokemons")"""
+collection = database.get_collection("pokemons")
 
 
 async def fetch_one_pokemon(p_id: int):
     """Fetch one Pokémon from the database"""
     document = await collection.find_one({"id": {"$eq": p_id}})
     if document:
-        # Deserialize the MongoDB document into a Python object using the Pydantic model
         pokemon = PokemonModel(**document)
         return pokemon
     return None
