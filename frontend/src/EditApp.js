@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
-import './EditApp.css';
+import './css/EditApp.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Form, Table, Button, Col, InputGroup, Row, Card, ListGroup } from 'react-bootstrap';
 import { SharedStateContext } from './SharedStateContext';

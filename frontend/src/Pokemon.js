@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Pokemon.css';
+import './css/Pokemon.css';
 
 export default function Pokemon({ currentPokemons, currentPage }) {
   const [element, setElement] = useState(null);

@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import React from 'react'
-import './SearchInput.css';
+import './css/SearchInput.css';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';

@@ -1,5 +1,5 @@
 import React from 'react'
-import './Pagination.css'
+import './css/Pagination.css'
 
 function range(start, end) {
   var ans = [];
