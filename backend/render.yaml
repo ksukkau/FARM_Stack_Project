@@ -8,3 +8,4 @@ services:
     env:
       - key: PYTHONUNBUFFERED
         value: "1"
+    publishDirectory: .
