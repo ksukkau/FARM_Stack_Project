@@ -8,6 +8,7 @@ import SearchInput from './SearchInput'
 import { SharedStateContext } from './SharedStateContext';
 import Card from 'react-bootstrap/Card';
 
+URL = 'https://farmstackbackend-70uo.onrender.com'
 
 const filterPokemon = (pokemons, searchInputs) => {
   console.log("entered filter")
@@ -52,7 +53,7 @@ export default function App() {
 
   let firstload = true;
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/v1/allpokemon')
+    axios.get(`${URL}/api/v1/allpokemon`)
       .then(res => res.data)
       .then(res => {
         if(firstload){

@@ -6,13 +6,15 @@ import EditApp from './EditApp';
 import axios from 'axios';
 import { SharedStateProvider } from './SharedStateContext';
 
+URL = 'https://farmstackbackend-70uo.onrender.com'
+
 export default function NavTabs () {
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Make a POST request to the backend endpoint
-        const response = await axios.post('http://127.0.0.1:8000/api/v1/pokemon/reload');
+        const response = await axios.post(`${URL}/api/v1/pokemon/reload`);
 
         // Handle the response as needed
         console.log(response.data.message);

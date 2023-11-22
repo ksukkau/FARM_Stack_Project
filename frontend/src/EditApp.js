@@ -5,6 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { Form, Table, Button, Col, InputGroup, Row, Card, ListGroup } from 'react-bootstrap';
 import { SharedStateContext } from './SharedStateContext';
 
+URL = 'https://farmstackbackend-70uo.onrender.com'
+
 export default function EditApp() {
 
   const { pokemons, setPokemons } = useContext(SharedStateContext);
@@ -22,8 +24,8 @@ export default function EditApp() {
   const updatePokemonHandler = async () => {
     createPokemon();
     try {
-      await axios.post(`http://127.0.0.1:8000/api/v1/pokemon/{id}?p_id=${pokemonId}`, pokemon);
-      const updatedPokemons = await axios.get('http://127.0.0.1:8000/api/v1/allpokemon').then(res => res.data);
+      await axios.post(`${URL}/api/v1/pokemon/{id}?p_id=${pokemonId}`, pokemon);
+      const updatedPokemons = await axios.get(`${URL}/api/v1/allpokemo`).then(res => res.data);
       setPokemons(updatedPokemons);
     } catch (error) {
       console.error(error);
@@ -32,8 +34,8 @@ export default function EditApp() {
 
   const deletePokemonHandler = async () => {
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/v1/pokemon/{id}?p_id=${pokemonId}`);
-      const updatedPokemons = await axios.get('http://127.0.0.1:8000/api/v1/allpokemon').then(res => res.data);
+      await axios.delete(`${URL}/api/v1/pokemon/{id}?p_id=${pokemonId}`);
+      const updatedPokemons = await axios.get(`${URL}/api/v1/allpokemon`).then(res => res.data);
       setPokemons(updatedPokemons);
     } catch (error) {
       console.error(error);

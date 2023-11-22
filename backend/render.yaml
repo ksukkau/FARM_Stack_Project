@@ -1,9 +1,11 @@
-
 services:
   - type: web
     name: farm-stack-backend
-    buildCommand: /opt/render/project/src/.venv/bin/python3.10 -m pip install -r requirements.txt
-    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT --workers 4
+    buildCommand: pipenv install
+    startCommand: pipenv run uvicorn main:app --host 0.0.0.0 --port $PORT --workers 4
     env:
       - key: PYTHONUNBUFFERED
         value: "1"
+      - key: PIPENV_VERBOSITY
+        value: "-1"
+    usePipenv: true
