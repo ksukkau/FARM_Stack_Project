@@ -18,10 +18,6 @@ Table thead{
   margin: 0 0 0 0;
 }
 
-@media screen and (max-width: 999px){
-  .container {
- margin-top: 150px;
-}}
 
 .row {
   width:80%;

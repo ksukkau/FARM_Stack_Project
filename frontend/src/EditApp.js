@@ -69,7 +69,7 @@ export default function EditApp() {
   return (
     <div className="App">
       <div className='container d-flex justify-content-center align-items-center' style={{padding:'1rem'}}>
-        <Card className="align-items-center" style={{width: '50rem', height: '30rem', }}>
+        <Card className="align-items-center" style={{width: 'auto', height: 'auto', }}>
           <Card.Header style={{width:'100%'}}>
           <h1 className='text-primary text-center'>Edit Pokemon Data</h1>
           </Card.Header>
@@ -229,7 +229,7 @@ export default function EditApp() {
           </ListGroup>
         </Card>
       </div>
-      <div className='container d-flex justify-content-center align-items-center' style={{padding:'1rem',}}>
+      <div className='container d-flex justify-content-center align-items-center' style={{padding:'1rem', marginTop: '5rem'}}>
       <div className='row'>
           <div className='col-md-12'>
             <h1 className='text-primary text-center'>Pokemon List</h1>
