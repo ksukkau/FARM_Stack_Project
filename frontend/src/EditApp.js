@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { Form, Table, Button, Col, InputGroup, Row, Card, ListGroup } from 'react-bootstrap';
 import { SharedStateContext } from './SharedStateContext';
 
-URL = 'https://farmstackbackend-70uo.onrender.com'
+URL = 'https://farm-stack-project.customcloud.ca'
 
 export default function EditApp() {
 

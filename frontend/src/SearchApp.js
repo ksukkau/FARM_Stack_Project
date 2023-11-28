@@ -8,7 +8,7 @@ import SearchInput from './SearchInput'
 import { SharedStateContext } from './SharedStateContext';
 import Card from 'react-bootstrap/Card';
 
-URL = 'https://farmstackbackend-70uo.onrender.com'
+URL = 'https://farm-stack-project.customcloud.ca'
 
 const filterPokemon = (pokemons, searchInputs) => {
   console.log("entered filter")

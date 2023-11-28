@@ -6,7 +6,7 @@ import EditApp from './EditApp';
 import axios from 'axios';
 import { SharedStateProvider } from './SharedStateContext';
 
-URL = 'https://farmstackbackend-70uo.onrender.com'
+URL = 'https://farm-stack-project.customcloud.ca'
 
 export default function NavTabs () {
 
