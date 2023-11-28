@@ -17,3 +17,17 @@ Table thead{
   top: 0px;
   margin: 0 0 0 0;
 }
+
+@media screen and (max-width: 999px){
+  .container {
+ margin-top: 150px;
+}}
+
+.row {
+  width:80%;
+}
+
+@media screen and (max-width: 800px){
+  .row {
+    width:100%;
+  }}

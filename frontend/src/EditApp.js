@@ -229,8 +229,8 @@ export default function EditApp() {
           </ListGroup>
         </Card>
       </div>
-      <div className='container d-flex justify-content-center align-items-center' style={{padding:'1rem'}}>
-      <div className='row' style={{width:'80%'}}>
+      <div className='container d-flex justify-content-center align-items-center' style={{padding:'1rem',}}>
+      <div className='row'>
           <div className='col-md-12'>
             <h1 className='text-primary text-center'>Pokemon List</h1>
             <div className='table-responsive'>
