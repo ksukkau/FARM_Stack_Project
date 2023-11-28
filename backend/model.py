@@ -48,13 +48,13 @@ class NameTranslations(BaseModel):
     chinese: str
     french: str
 
-    def dump(self):
-        return {
-            "english": self.english,
-            "japanese": self.japanese,
-            "chinese": self.chinese,
-            "french": self.french,
-            }
+    # def dump(self):
+    #     return {
+    #         "english": self.english,
+    #         "japanese": self.japanese,
+    #         "chinese": self.chinese,
+    #         "french": self.french,
+    #         }
 
 class PokemonModel(BaseModel):
     """
@@ -74,11 +74,10 @@ class PokemonModel(BaseModel):
         fields = {
             '_id': "$oid"
         }
-
     def dump(self):
         return {
             "id": self.id,
-            "name": self.name.dump(),
+            "name": self.name.model_dump(),
             "type": self.type,
             "base": self.base.dump(),
             "__v": 0
