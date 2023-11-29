@@ -1,14 +1,16 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import SearchApp from './SearchApp'; 
 import EditApp from './EditApp';
 import axios from 'axios';
+import Spinner from 'react-bootstrap/Spinner';
 import { SharedStateProvider } from './SharedStateContext';
 
 URL = 'https://farm-stack-project.customcloud.ca'
 
 export default function NavTabs () {
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,13 +23,24 @@ export default function NavTabs () {
 
       } catch (error) {
         console.error('Error updating database:', error);
+      } finally {
+        setLoading(false); // Set loading to false regardless of success or failure
       }
     };
 
     fetchData(); // Call the async function
 
     // This effect runs only once after the initial render
-  }, []);
+  }, []); 
+
+  // Render loading state if data is still being fetched
+  if (loading) {
+    return <div className='d-flex justify-content-center align-items-center min-vh-100'>
+    <Spinner animation="border" variant="success" />
+    <p style={{paddingLeft:"1rem"}}>Loading...</p>
+  </div>;
+  }
+
 
   return (
     <div>

@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Pagination from './Pagination';
 import Pokemon from './Pokemon'
 import SearchInput from './SearchInput'
+import Spinner from 'react-bootstrap/Spinner';
 import { SharedStateContext } from './SharedStateContext';
 import Card from 'react-bootstrap/Card';
 
@@ -48,21 +49,29 @@ export default function App() {
   })
   const [currentPage, setCurrentPage] = useState(1);
   const [pokemonsPerPage] = useState(10);
-
+  const [loading, setLoading] = useState(true);
   const {pokemons, setPokemons} = useContext(SharedStateContext);
 
-  let firstload = true;
   useEffect(() => {
     axios.get(`${URL}/api/v1/allpokemon`)
       .then(res => res.data)
       .then(res => {
-        if(firstload){
-          firstload = false
-          setPokemons(res)
-        }
+        setPokemons(res);
+        setLoading(false); // Set loading to false when data is fetched
       })
-      .catch(err => console.log("err", err))
-  }, [])
+      .catch(err => {
+        console.log("err", err);
+        setLoading(false); // Set loading to false in case of an error
+      });
+  }, []);
+
+  // Render loading state if data is still being fetched
+  if (loading) {
+    return <div className='d-flex justify-content-center align-items-center min-vh-100'>
+    <Spinner animation="border" variant="success" />
+    <p style={{paddingLeft:"1rem"}}>Loading...</p>
+    </div>;
+  }
 
   const filteredPokemons = filterPokemon(pokemons, searchInputs)
   
